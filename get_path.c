@@ -8,28 +8,28 @@
 void get_path(char **command)
 {
 	int i;
-	char **path_tokens = NULL;
+	char **tokn = NULL;
 	char *path = strdup(getenv("PATH"));
-	char *temporary_path = NULL;
+	char *_path = NULL;
 
-	path_tokens = split_string(path, ":");
+	tokn = split_string(path, ":");
 	free(path);
 	path = NULL;
 
-	for (i = 0; path_tokens[i]; i++)
+	for (i = 0; tokn[i]; i++)
 	{
-	temporary_path = calloc(sizeof(char), (strlen(path_tokens[i]) + 1 + strlen(command[0]) + 1));
-	strcat(temporary_path, path_tokens[i]);
-	strcat(temporary_path, "/");
-	strcat(temporary_path, command[0]);
+	_path = calloc(sizeof(char), (strlen(tokn[i]) + 1 + strlen(command[0]) + 1));
+	strcat(_path, tokn[i]);
+	strcat(_path, "/");
+	strcat(_path, command[0]);
 
-	if (access(temporary_path, F_OK) == 0)
+	if (access(_path, F_OK) == 0)
 	break;
-	free(temporary_path);
-	temporary_path = NULL;
+	free(_path);
+	_path = NULL;
 	}
-	free_array(path_tokens);
+	free_array(tokn);
 	free(command[0]);
-	command[0] = temporary_path;
+	command[0] = _path;
 }
 
